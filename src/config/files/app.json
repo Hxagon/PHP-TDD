@@ -1,0 +1,10 @@
+{
+  "project_name": "Boilerplate",
+  "project_version": "1.0.0",
+  "template": {
+    "layout": "main.phtml",
+    "pages": {
+      "index": "index.phtml"
+    }
+  }
+}
