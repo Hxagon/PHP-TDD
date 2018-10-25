@@ -10,6 +10,7 @@ class ConfigHelper {
 	private $configFiles;
 	private $envConfig;
 	private $appConfig;
+	private $routesConfig;
 
 	/**
 	 * ConfigHelper constructor.
@@ -44,6 +45,7 @@ class ConfigHelper {
 	{
 		$this->envConfig = json_decode(file_get_contents($this::CONFIG_FILES_SOURCE . '/env.json'));
 		$this->appConfig = json_decode(file_get_contents($this::CONFIG_FILES_SOURCE . '/app.json'));
+		$this->routesConfig = json_decode(file_get_contents($this::CONFIG_FILES_SOURCE . '/routes.json'));
 	}
 
 	/***
@@ -60,5 +62,13 @@ class ConfigHelper {
 	public function getConfigTemplate()
 	{
 		return $this->appConfig->template;
+	}
+
+	/**
+	 * @return object
+	 */
+	public function getRoutes()
+	{
+		return $this->routesConfig->public_routes;
 	}
 }

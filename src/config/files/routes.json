@@ -1,0 +1,7 @@
+{
+  "public_routes": {
+    "":         "IndexController",
+    "/":        "IndexController",
+    "public":   "IndexController"
+  }
+}

@@ -2,11 +2,16 @@
 namespace PHPTDD;
 require_once '../vendor/autoload.php';
 
-const PUBLIC_ROOT = __DIR__;
+if (!defined('ROOT_DIR')) {
+	define('ROOT_DIR', pathinfo(realpath(__DIR__))['dirname']);
+}
+
+if (!defined('PUBLIC_ROOT')) {
+	define('PUBLIC_ROOT', dirname(__FILE__) . '/');
+}
 
 $configHelper = new ConfigHelper();
 $env = $configHelper->getProjectEnv();
-
 
 // Setup error reporting
 if ($env === 'dev') {
@@ -19,4 +24,18 @@ if ($env === 'dev') {
 
 // Layout and template
 $templateService = new TemplateService();
-echo $templateService->getLayoutFile();
+
+if (!defined('LAYOUT_PATH')) {
+	define('LAYOUT_PATH', $templateService->getLayoutPath());
+}
+
+ob_start();
+include $templateService->getLayoutFile();
+$layout = ob_get_contents();
+ob_end_clean();
+
+// Get content from specific controller
+$router = new RouterService();
+$controller = $router->getController(pathinfo($_SERVER['REQUEST_URI'])['basename']);
+
+echo $layout;
